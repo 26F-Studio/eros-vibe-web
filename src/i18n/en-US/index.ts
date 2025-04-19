@@ -1,7 +1,28 @@
-// This is just an example,
-// so you can safely delete all default props below
-
 export default {
-  failed: 'Action failed',
-  success: 'Action was successful'
+  components: {},
+  layouts: {
+    drawers: {
+      LeftMainDrawer: {
+        navigations: { aurora: 'Aurora', home: 'Home', onebot: 'OneBot' },
+      },
+    },
+    headers: {
+      MainHeader: {
+        labels: {
+          toggleDarkMode: 'Toggle Dark Mode',
+        },
+      },
+    },
+  },
+  pages: {
+    HomePage: {
+      labels: {
+        connectToWifi: 'Connect to Wi-Fi',
+        ssid: 'SSID',
+        password: 'Password',
+        connect: 'Connect',
+      },
+    },
+  },
+  common: {},
 };
