@@ -2,6 +2,8 @@
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file
 
 import { defineConfig } from '#q-app/wrappers';
+import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { extname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 // noinspection JSUnusedGlobalSymbols
@@ -13,7 +15,7 @@ export default defineConfig((ctx) => {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: ['axios', 'bus', 'i18n'],
+    boot: ['axios', 'bus', 'i18n', 'ws'],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#css
     css: ['app.scss'],
@@ -34,11 +36,24 @@ export default defineConfig((ctx) => {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#build
     build: {
-      alias: {
-        css: fileURLToPath(new URL('./src/css', import.meta.url)),
-        constants: fileURLToPath(new URL('./src/constants', import.meta.url)),
-        types: fileURLToPath(new URL('./src/types', import.meta.url)),
-        utils: fileURLToPath(new URL('./src/utils', import.meta.url)),
+      afterBuild(params) {
+        const distDir = params.quasarConf.build?.distDir;
+        if (distDir && process.env.DEPLOY_GITHUB_PAGE) {
+          const indexHtml = readFileSync(resolve(distDir, 'index.html')).toString();
+          const newHtml = indexHtml.replace('href="/manifest.json"', 'href="manifest.json"');
+          writeFileSync(resolve(distDir, 'index.html'), newHtml);
+
+          readdirSync(resolve(distDir, 'assets')).forEach((filename) => {
+            if (extname(filename) === '.js') {
+              const filepath = resolve(distDir, 'assets', filename);
+              const content = readFileSync(filepath).toString();
+              if (content.includes('/sw.js')) {
+                const newContent = content.replace('/sw.js', 'sw.js');
+                writeFileSync(filepath, newContent);
+              }
+            }
+          });
+        }
       },
 
       target: {
@@ -69,7 +84,7 @@ export default defineConfig((ctx) => {
       // distDir
 
       extendViteConf(viteConf) {
-        viteConf.base = process.env.DEPLOY_GITHUB_PAGE ? '/ParticleG/' : '/';
+        viteConf.base = process.env.DEPLOY_GITHUB_PAGE ? '/eros-vibe-web/' : '/';
       },
       // viteVuePluginOptions: {},
 
@@ -126,7 +141,7 @@ export default defineConfig((ctx) => {
       // directives: [],
 
       // Quasar plugins
-      plugins: ['Notify'],
+      plugins: ['Dialog', 'Notify'],
     },
 
     // animations: 'all', // --- includes all animations
@@ -172,7 +187,7 @@ export default defineConfig((ctx) => {
 
     // https://v2.quasar.dev/quasar-cli-vite/developing-pwa/configuring-pwa
     pwa: {
-      workboxMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
+      workboxMode: 'InjectManifest', // 'GenerateSW' or 'InjectManifest'
       // swFilename: 'sw.js',
       // manifestFilename: 'manifest.json',
       // extendManifestJson (json) {},
