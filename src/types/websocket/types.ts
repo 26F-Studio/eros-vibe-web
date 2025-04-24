@@ -1,6 +1,4 @@
-export enum WsAction {
-
-}
+export enum WsAction {}
 
 export interface WsResponse {
   action: WsAction;

@@ -1,5 +1,5 @@
-import { defineStore } from '#q-app/wrappers'
-import { createPinia } from 'pinia'
+import { defineStore } from '#q-app/wrappers';
+import { createPinia } from 'pinia';
 import { createPersistedState } from 'pinia-plugin-persistedstate';
 
 /*
@@ -24,12 +24,12 @@ declare module 'pinia' {
  */
 
 export default defineStore((/* { ssrContext } */) => {
-  const pinia = createPinia()
+  const pinia = createPinia();
   pinia.use(
     createPersistedState({
       auto: true,
       key: (id) => `26F-Studio.eros-vibe-web.${id}`,
     }),
   );
-  return pinia
-})
+  return pinia;
+});

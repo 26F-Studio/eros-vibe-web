@@ -1,15 +1,21 @@
 export default {
-  components: {},
+  components: {
+    ThemeButton: {
+      labels: {
+        switchTheme: 'Switch Theme',
+      },
+    },
+  },
   layouts: {
     drawers: {
       LeftMainDrawer: {
-        navigations: { aurora: 'Aurora', home: 'Home', onebot: 'OneBot' },
+        navigations: { home: 'Home' },
       },
     },
     headers: {
       MainHeader: {
         labels: {
-          toggleDarkMode: 'Toggle Dark Mode',
+          title: 'Eros Vibe',
         },
       },
     },
@@ -17,6 +23,7 @@ export default {
   pages: {
     HomePage: {
       labels: {
+        title: 'Eros Vibe',
         connectToWifi: 'Connect to Wi-Fi',
         ssid: 'SSID',
         password: 'Password',
@@ -24,5 +31,4 @@ export default {
       },
     },
   },
-  common: {},
 };

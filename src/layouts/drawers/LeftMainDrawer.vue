@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n';
-
 import { bus } from 'boot/bus';
+import { i18nSubPath } from 'src/utils/common';
 
 interface Navigation {
   label: string;
@@ -10,11 +9,7 @@ interface Navigation {
   route: string;
 }
 
-const { t } = useI18n();
-
-const i18n = (relativePath: string) => {
-  return t('layouts.drawers.LeftMainDrawer.' + relativePath);
-};
+const i18n = i18nSubPath('layouts.drawers.LeftMainDrawer');
 
 const navigations: Navigation[] = [
   {
@@ -22,18 +17,6 @@ const navigations: Navigation[] = [
     icon: 'home',
     available: true,
     route: 'home',
-  },
-  {
-    label: 'aurora',
-    icon: 'mdi-aurora',
-    available: true,
-    route: 'aurora',
-  },
-  {
-    label: 'onebot',
-    icon: 'android',
-    available: false,
-    route: 'onebot',
   },
 ];
 </script>
@@ -54,10 +37,7 @@ const navigations: Navigation[] = [
       <template v-for="navigation in navigations" :key="navigation">
         <q-item :disable="!navigation.available" exact :to="navigation.route">
           <q-item-section avatar>
-            <q-icon
-              :name="navigation.icon"
-              :color="navigation.available ? 'primary' : 'grey'"
-            />
+            <q-icon :name="navigation.icon" :color="navigation.available ? 'primary' : 'grey'" />
           </q-item-section>
           <q-item-section :class="navigation.available ? '' : 'text-grey'">
             {{ i18n('navigations.' + navigation.label) }}

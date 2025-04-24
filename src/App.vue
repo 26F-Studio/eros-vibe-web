@@ -1,9 +1,13 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
+
 import { useSettingsStore } from 'stores/settings';
 
-const { applyDarkMode } = useSettingsStore();
+const { applyTheme } = useSettingsStore();
 
-applyDarkMode();
+onMounted(() => {
+  applyTheme();
+});
 </script>
 <template>
   <router-view />

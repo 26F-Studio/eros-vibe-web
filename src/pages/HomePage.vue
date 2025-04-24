@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 
 import { i18nSubPath } from 'src/utils/common';
-import { connectWifi } from 'utils/requests';
+import { connectWifi } from 'src/utils/requests';
 
 const i18n = i18nSubPath('pages.HomePage');
 

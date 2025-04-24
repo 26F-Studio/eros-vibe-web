@@ -27,19 +27,11 @@ bus.on('drawer', (action, position) => {
 <template>
   <q-layout view="hHh LpR lFf">
     <router-view :mobile="screen.lt.md" name="header" />
-    <router-view
-      :mobile="screen.lt.md"
-      :model-value="leftDrawerOpen"
-      name="leftDrawer"
-    />
+    <router-view :mobile="screen.lt.md" :model-value="leftDrawerOpen" name="leftDrawer" />
     <q-page-container style="height: 100vh">
       <router-view />
     </q-page-container>
-    <router-view
-      :mobile="screen.lt.md"
-      :model-value="rightDrawerOpen"
-      name="rightDrawer"
-    />
+    <router-view :mobile="screen.lt.md" :model-value="rightDrawerOpen" name="rightDrawer" />
     <router-view :mobile="screen.lt.md" name="footer" />
   </q-layout>
 </template>
